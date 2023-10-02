@@ -7,7 +7,7 @@ import static java.lang.reflect.Array.newInstance;
  * and values of type V. Associative Arrays store key/value pairs
  * and permit you to look up values by key.
  *
- * @author Your Name Here
+ * @author Chloe Kelly
  * @author Samuel A. Rebelsky
  */
 public class AssociativeArray<K, V> {
@@ -45,7 +45,7 @@ public class AssociativeArray<K, V> {
   public AssociativeArray() {
     // Creating new arrays is sometimes a PITN.
     this.pairs = (KVPair<K, V>[]) newInstance((new KVPair<K, V>()).getClass(),
-        DEFAULT_CAPACITY);
+      DEFAULT_CAPACITY);
     this.size = 0;
   } // AssociativeArray()
 
@@ -76,7 +76,19 @@ public class AssociativeArray<K, V> {
    * get(key) will return value.
    */
   public void set(K key, V value) {
-    // STUB
+    int i = 0;
+    while(this.pairs[i].key != null){
+      if (key.equals(this.pairs[i].key)) {
+        this.pairs[i].value = value;
+        return;
+      }
+      i++;
+      if(i >= this.pairs.length){
+        this.expand();
+      }   
+    }//while
+    KVPair<K, V> temp = new KVPair<K, V>(key, value);
+    this.pairs[i] = temp;
   } // set(K,V)
 
   /**
@@ -87,13 +99,32 @@ public class AssociativeArray<K, V> {
    *                              array.
    */
   public V get(K key) throws KeyNotFoundException {
-    return null; // STUB
+    // for (int i = 0; i < this.pairs.length; i++) {
+    //   if (key.equals(this.pairs[i].key)) {
+    //     return this.pairs[i].value;
+    //   }
+    // }
+    int i = 0;
+    while(this.pairs[i].key != null){
+      if (key.equals(this.pairs[i].key)) {
+        return this.pairs[i].value;
+      }
+      i++;
+    }
+    throw new KeyNotFoundException();
   } // get(K)
 
   /**
    * Determine if key appears in the associative array.
    */
   public boolean hasKey(K key) {
+    int i = 0;
+    while(this.pairs[i].key != null){
+      if (key.equals(this.pairs[i].key)) {
+        return true;
+      }
+      i++;
+    }
     return false; // STUB
   } // hasKey(K)
 
@@ -129,7 +160,7 @@ public class AssociativeArray<K, V> {
    * If no such entry is found, throws an exception.
    */
   public int find(K key) throws KeyNotFoundException {
-    throw new KeyNotFoundException();   // STUB
+    throw new KeyNotFoundException(); // STUB
   } // find(K)
 
 } // class AssociativeArray
