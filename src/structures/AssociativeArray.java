@@ -89,16 +89,17 @@ public class AssociativeArray<K, V> {
    * get(key) will return value.
    */
   public void set(K key, V value) {
-    int i = 0;
+    int i = 0; //set while loop start
     while(this.pairs[i] != null){
       if (key.equals(this.pairs[i].key)) {
-        this.pairs[i].value = value;
+        this.pairs[i].value = value; 
+        //replace matching key is found
         return;
-      }
+      } //if
       i++;
       if(i >= this.pairs.length){
         this.expand();
-      }   
+      } //if
     }//while
     this.pairs[i] = new KVPair<K, V>(key, value);
     this.size++;
@@ -116,7 +117,7 @@ public class AssociativeArray<K, V> {
       return this.pairs[find(key)].value;
     } catch (Exception e) {
       throw new KeyNotFoundException();
-    } 
+    } //try/catch
   } // get(K)
 
   /**
@@ -127,7 +128,7 @@ public class AssociativeArray<K, V> {
       return (this.find(key) >= 0);
     } catch (Exception e){
       return false;
-    }  
+    }  //try/catch
   } // hasKey(K)
 
   /**
@@ -180,9 +181,9 @@ public class AssociativeArray<K, V> {
     while(this.pairs[i] != null){
       if (key.equals(this.pairs[i].key)) {
         return i;
-      }
+      }//if
       i++;
-    }
+    }//while
     throw new KeyNotFoundException();
   } // find(K)
 
