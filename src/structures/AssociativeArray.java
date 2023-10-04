@@ -88,9 +88,13 @@ public class AssociativeArray<K, V> {
   /**
    * Set the value associated with key to value. Future calls to
    * get(key) will return value.
+   * If key or value equal null, the pair will not be set.
    */
   public void set(K key, V value) {
     try{
+      if(key == null || value == null){
+        return;
+      }
       this.pairs[find(key)].value = value;
     } catch (Exception e) {
       if(this.size >= this.pairs.length){
@@ -109,6 +113,9 @@ public class AssociativeArray<K, V> {
    */
   public V get(K key) throws KeyNotFoundException {
     try{
+      if(key == null){
+        return null;
+      }//if
       return this.pairs[this.find(key)].value;
     } catch (Exception e) {
       throw new KeyNotFoundException();

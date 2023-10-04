@@ -41,6 +41,9 @@ public class AssociativeArrayExperiments {
     AssociativeArray<String,String> s2s = 
       new ReportingAssociativeArray<String,String>("s2s", pen);
     s2s.size();
+    s2s.set("Null test", null);
+    try { s2s.get("Null test"); } catch (Exception e) {}
+    try { s2s.get(null); } catch (Exception e) { }
     s2s.set("a", "apple");
     s2s.set("A", "aardvark");
     s2s.size();
