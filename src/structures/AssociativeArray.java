@@ -72,12 +72,13 @@ public class AssociativeArray<K, V> {
   public String toString() {
     if (this.size <= 0){
       return "{}";
-    }
-    String[] strings = new String[this.size];
+    } //if
+    String[] strings = new String[this.size]; //create string array 
     for(int i = 0; i < strings.length; i++){
       strings[i] = this.pairs[i].key.toString() + ": " + this.pairs[i].value.toString();
+      //save KVPair in the correct string format to the array
     }
-    return "{ " + String.join(", ", strings) + " }";
+    return "{ " + String.join(", ", strings) + " }"; //print the array
   } // toString()
 
   // +----------------+----------------------------------------------
@@ -89,20 +90,14 @@ public class AssociativeArray<K, V> {
    * get(key) will return value.
    */
   public void set(K key, V value) {
-    int i = 0; //set while loop start
-    while(this.pairs[i] != null){
-      if (key.equals(this.pairs[i].key)) {
-        this.pairs[i].value = value; 
-        //replace matching key is found
-        return;
-      } //if
-      i++;
-      if(i >= this.pairs.length){
+    try{
+      this.pairs[find(key)].value = value;
+    } catch (Exception e) {
+      if(this.size >= this.pairs.length){
         this.expand();
       } //if
-    }//while
-    this.pairs[i] = new KVPair<K, V>(key, value);
-    this.size++;
+      this.pairs[this.size++] = new KVPair<K, V>(key, value);
+    } //try/catch
   } // set(K,V)
 
   /**
@@ -114,7 +109,7 @@ public class AssociativeArray<K, V> {
    */
   public V get(K key) throws KeyNotFoundException {
     try{
-      return this.pairs[find(key)].value;
+      return this.pairs[this.find(key)].value;
     } catch (Exception e) {
       throw new KeyNotFoundException();
     } //try/catch
@@ -137,21 +132,15 @@ public class AssociativeArray<K, V> {
    * in the associative array, does nothing.
    */
   public void remove(K key) {
-    int i = 0;
-    int toDelete = -1; //so that we don't overwrite a 0 index
-    while(this.pairs[i] != null){
-      //We want to go to the end of the array regardless, so we can move that last pair
-      if (key.equals(this.pairs[i].key)) {
-        toDelete = i;
-      }//if. Save the deletion index if found
-      i++;
-    }//while
-    if (toDelete >= 0){
-      KVPair<K,V> moveToEmpty = this.pairs[i-1]; //Save ending value
+    try{
+      int toDelete = this.find(key);
+      KVPair<K,V> moveToEmpty = this.pairs[this.size-1]; //Save ending value
       this.pairs[toDelete] = moveToEmpty; //Overwrite the pair to delete with the ending pair
-      this.pairs[i-1] = null;//Set that last index to null
+      this.pairs[this.size-1] = null;//Set that last index to null
       --this.size;
-    }//if
+    } catch (Exception e){
+      //Do nothing
+    }//try/catch
   } // remove(K)
 
   /**
