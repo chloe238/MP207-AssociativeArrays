@@ -59,7 +59,7 @@ public class AssociativeArray<K, V> {
   public AssociativeArray<K, V> clone() {
     AssociativeArray<K, V> cloneArr = new AssociativeArray<K, V>();
     int i = 0;
-    while(this.pairs[i] != null){
+    while(i < this.size){
       cloneArr.set(this.pairs[i].key, this.pairs[i].value);
       i++;
     }
@@ -88,11 +88,11 @@ public class AssociativeArray<K, V> {
   /**
    * Set the value associated with key to value. Future calls to
    * get(key) will return value.
-   * If key or value equal null, the pair will not be set.
+   * If key equals
    */
   public void set(K key, V value) {
     try{
-      if(key == null || value == null){
+      if(key == null){
         return;
       }
       this.pairs[find(key)].value = value;
