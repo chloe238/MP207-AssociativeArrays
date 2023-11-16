@@ -88,7 +88,7 @@ public class AssociativeArray<K, V> {
   /**
    * Set the value associated with key to value. Future calls to
    * get(key) will return value.
-   * If key equals
+   * If key equals null, the pair will not be set
    */
   public void set(K key, V value) {
     try{
